@@ -18,10 +18,13 @@ nav:
   fixed: false
 
 menu:
-  # Home: / || fas fa-home
-  # List||fas fa-list:
-  #   Music: /music/ || fas fa-music
-  #   Movie: /movies/ || fas fa-video
+  首页: / || fas fa-home
+  时间轴: /archives/ || fas fa-archive
+  标签: /tags/ || fas fa-tags
+  分类: /categories/ || fas fa-folder-open
+  关于: /about/ || fas fa-heart
+
+
 
 # --------------------------------------
 # Code Blocks Settings
@@ -146,7 +149,6 @@ post_meta:
 index_site_info_top:
 # The height of top_img, eg: 300px/300em/300rem
 index_top_img_height:
-e:
 # The subtitle on homepage
 subtitle:
   enable: true
