@@ -2,12 +2,12 @@
 ## Docs: https://hexo.io/docs/configuration.html
 ## Source: https://github.com/hexojs/hexo/
 
-# Site
-title: 我的学习博客
-subtitle: '记录学习的每一步'
-description: '记录我的学习历程与心得'
-keywords:
-author: luocl88
+# Sitezinluo
+title: '星落的学习blog'
+subtitle: '卷心菜卷不动啦'
+description: 'welcome to my blog'
+keywords: 博客，学习，技术，生活
+author: '星落'
 language: zh-CN
 timezone: Asia/Shanghai
 
@@ -102,3 +102,9 @@ theme: butterfly
 ## Docs: https://hexo.io/docs/one-command-deployment
 deploy:
   type: ''
+# Local Search
+search:
+  path: search.xml
+  field: post
+  content: true
+  format: html

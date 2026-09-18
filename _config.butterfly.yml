@@ -23,6 +23,7 @@ menu:
   标签: /tags/ || fas fa-tags
   分类: /categories/ || fas fa-folder-open
   关于: /about/ || fas fa-heart
+  友链: /link/ || fas fa-link
 
 
 
@@ -36,7 +37,7 @@ code_blocks:
   macStyle: false
   # Code block height limit (unit: px)
   height_limit: false
-  word_wrap: false
+  word_wrap: true
 
   # Toolbar
   copy: true
@@ -49,8 +50,8 @@ code_blocks:
 # Formal:
 #   icon: link || the description || color
 social:
-  # fab fa-github: https://github.com/xxxxx || Github || '#24292e'
-  # fas fa-envelope: mailto:xxxxxx@gmail.com || Email || '#4a7dbe'
+  fab fa-github: https://github.com/luocl88 || Github || '#24292e'
+  fas fa-envelope: mailto:xxxxxx@gmail.com || Email || '#4a7dbe'
 
 # --------------------------------------
 # Image Settings
@@ -59,23 +60,23 @@ social:
 favicon: /img/favicon.png
 
 avatar:
-  img: /img/butterfly-icon.png
+  img: /img/cover2.jpg
   effect: false
 
 # Disable all banner images
 disable_top_img: false
 
 # If the banner of page not setting, it will show the default_top_img
-default_top_img:
+default_top_img: 
 
 # The banner image of index page
-index_img: https://picsum.photos/id/1015/1920/600
+index_img: img/cover3.jpeg
 
 # The banner image of archive page
-archive_img:
+archive_img: /img/cover5.jpeg
 
 # Note: tag page, not tags page
-tag_img:
+tag_img: /img/cover6.jpg
 
 # The banner image of tag page, you can set the banner image for each tag
 # Format:
@@ -83,7 +84,7 @@ tag_img:
 tag_per_img:
 
 # Note: category page, not categories page
-category_img:
+category_img: /img/cover7.jpeg
 
 # The banner image of category page, you can set the banner image for each category
 # Format:
@@ -96,7 +97,7 @@ footer_img: false
 # Website Background
 # Can set it to color, image URL or an array containing colors and/or image URLs
 # If an array is provided, a random background will be selected from the array on each load
-background: url(https://picsum.photos/id/1018/1920/1080)
+background: /img/cover3.jpeg
 
 cover:
   # Disable the cover or not
@@ -105,7 +106,9 @@ cover:
   archives_enable: true
   # When cover is not set, the default cover is displayed
   default_cover:
-    # - xxx.jpg
+    - https://jsd.012700.xyz/gh/jerryc127/CDN@latest/cover/default_bg.png
+    - https://jsd.012700.xyz/gh/jerryc127/CDN@latest/cover/default_bg2.png
+    - https://jsd.012700.xyz/gh/jerryc127/CDN@latest/cover/default_bg3.png
 
 # Replace Broken Images
 error_img:
@@ -187,7 +190,7 @@ index_layout: 3
 # 3: auto_excerpt (default)
 # false: do not show the article introduction
 index_post_content:
-  method: 3
+  method: 2
   # If you set method to 2 or 3, the length need to config
   length: 500
 
@@ -247,11 +250,11 @@ post_pagination: 1
 
 # Displays outdated notice for a post
 noticeOutdate:
-  enable: false
+  enable: true
   # Style: simple / flat
   style: flat
   # When will it be shown
-  limit_day: 365
+  limit_day: 180
   # Position: top / bottom
   position: top
   message_prev: It has been
@@ -269,7 +272,7 @@ footer:
   copyright:
     enable: true
     version: true
-  custom_text:
+  custom_text: 很高兴认识你🤗
 
 # --------------------------------------
 # Aside Settings
@@ -479,8 +482,8 @@ math:
 search:
   # Choose: algolia_search / local_search / docsearch
   # leave it empty if you don't need search
-  use:
-  placeholder:
+  use: local_search
+  placeholder: 输入关键词搜索…
 
   # Algolia Search
   algolia_search:
@@ -802,13 +805,13 @@ mask:
 
 # Loading Animation
 preloader:
-  enable: false
+  enable: true
   # source
   # 1. fullpage-loading
   # 2. pace (progress bar)
-  source: 1
+  source: 2
   # pace theme (see https://codebyzach.github.io/pace/)
-  pace_css_url:
+  pace_css_url: /css/pace.css
 
 # Page Transition
 enter_transitions: true
@@ -818,13 +821,13 @@ display_mode: light
 
 # Configuration for beautifying the content of the article
 beautify:
-  enable: false
+  enable: true
   # Specify the field to beautify (site or post)
   field: post
   # Specify the icon to be used as a prefix for the title, such as '\f0c1'
-  title_prefix_icon:
+  title_prefix_icon: '\f0c1'
   # Specify the color of the title prefix icon, such as '#F47466'
-  title_prefix_icon_color:
+  title_prefix_icon_color: '#F47466'
 
 # Global font settings
 # Don't modify the following settings unless you know how they work
@@ -1064,7 +1067,8 @@ inject:
   head:
     # - <link rel="stylesheet" href="/xxx.css">
   bottom:
-    # - <script src="xxxx"></script>
+    # 让全站背景跟随每个页面的顶部大图
+    - <script>const h=document.getElementById('page-header');const w=document.getElementById('web_bg');if(h&&w&&h.style.backgroundImage){w.style.backgroundImage=h.style.backgroundImage}</script>
 
 # CDN Settings
 # Don't modify the following settings unless you know how they work
@@ -1074,7 +1078,7 @@ CDN:
   # Note: Dev version can only use 'local' for internal scripts
   # Note: When setting third-party scripts to 'local', you need to install hexo-butterfly-extjs
   internal_provider: local
-  third_party_provider: jsdelivr
+  third_party_provider: local
 
   # Add version number to url, true or false
   version: true
