@@ -5,6 +5,10 @@
       link: https://hexo.io/zh-tw/
       avatar: https://d33wubrfki0l68.cloudfront.net/6657ba50e702d84afb32fe846bed54fba1a77add/827ae/logo.svg
       descr: 快速、简单且犟大的网志框架
+    - name: HACKED
+      link: https://blog.ss0t-hacked.top
+      avatar: https://foruda.gitee.com/avatar/1782995786228285340/15786671_asus_hacked_1782995786.png
+      descr: 一个刚刚入门的pwner，大手子ddw
 
 - class_name: 网站
   class_desc: 值得推荐的网站

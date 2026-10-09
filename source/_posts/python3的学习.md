@@ -596,4 +596,96 @@ for line in open("a.txt"):       # 文件 → 一行行读
 for i in range(5):               # 数字序列
 ```
 `for _ in range(n)` 里的下划线是惯例："这个变量我用不上，占个位"。你在 OJ 代码里见过很多次了。
-4.while（先判断后执行）
+4.while（先判断后执行）:什么时候用 while 而不是 for？
+▎ - 知道要跑多少次 → for
+▎ - 不知道跑多少次，只知道"到某个条件就停" → while
+比如"一直读输入直到读到 0 为止"，就该用 while。
+5.for...else：Python 特有的
+```
+for x in [1, 2, 3]:
+    if x == 5:
+        print("找到了")
+        break
+else:
+    print("循环正常跑完，没被 break 打断")
+
+else 在循环"正常跑完"时执行；如果中途 break 了就不执行。
+
+这个设计专门用来表达**"找遍了都没找到"**：
+
+for student in students:
+    if student["name"] == "张三":
+        print("找到了")
+        break
+else:
+    print("名单里没有张三")     # ← 一个都没匹配上才走这里
+```
+6.两个好搭档：enumerate 和 zip
+enumerate：既要下标又要值
+```
+C 的 for 天生带下标 i，Python 的 for 不带——所以需要下标时用 enumerate：
+
+// C：下标是自带的
+for (int i = 0; i < n; i++) {
+    printf("%d %s\n", i, names[i]);
+}
+
+# Python：用 enumerate 把下标也一起拿出来
+for i, name in enumerate(names):
+    print(i, name)
+
+for i, name in enumerate(["苹果", "香蕉", "橘子"]):
+    print(f"{i}: {name}")
+# 0: 苹果
+# 1: 香蕉
+# 2: 橘子
+
+enumerate(names, start=1)      # 想从 1 开始数，加这个参数
+```
+zip：同时遍历多个序列
+```
+names = ["张三", "李四", "王五"]
+scores = [85, 92, 78]
+
+for n, s in zip(names, scores):
+    print(n, s)
+# 张三 85
+# 李四 92
+# 王五 78
+```
+C 里你得用同一下标 i 去访问两个数组，Python 直接 zip 起来。哪个短就以哪个为准，多出来的忽略。
+7.一个必踩的坑：
+```
+lst = [1, 2, 4, 6, 5]
+for x in lst:
+    if x % 2 == 0:
+        lst.remove(x)
+print(lst)      # [1, 4, 5]   ← 4 被跳过了！
+```
+原因：for 是按位置依次取元素的。你一边删元素，列表一边变短，后面的元素整体往前挪——而 for 的下标还在往前走，于是刚挪过来的那个元素被跳过了。
+正确做法：造一个新列表，别改原来的。
+```
+lst = [1, 2, 4, 6, 5]
+lst = [x for x in lst if x % 2 != 0]     # 列表推导式
+print(lst)      # [1, 5]
+```
+▎ 规矩：遍历时不要增删容器元素。 要筛选用"造新列表"，非要原地删就倒着遍历（reversed）或者用 while 手动控制下标。
+▎
+▎ 注意：改元素的值是安全的（lst[i] = 99 没问题），危险的是增删（改变长度）。
+8.列表推导式` [x for x in lst if x % 2 != 0]`:
+把满足条件的元素收集成新列表
+```
+[x * 2 for x in [1, 2, 3]]              # [2, 4, 6]      对每个元素做变换
+[x for x in [1, 2, 3, 4] if x % 2 == 0] # [2, 4]         筛选
+[x          for x in lst        if x % 2 != 0]
+  ↑  取出x    ↑遍历lst中每个元素x   ↑条件：x除以2余数≠0，就是奇数
+[x * 2 for x in [1, 2, 3, 4] if x > 1]  # [4, 6]         两者结合
+```
+相当于`for 循环 + append`
+```
+result = []
+for x in [1, 2, 3]:
+    result.append(x * 2)
+
+result = [x * 2 for x in [1, 2, 3]]
+```
