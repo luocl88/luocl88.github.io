@@ -1067,8 +1067,7 @@ inject:
   head:
     # - <link rel="stylesheet" href="/xxx.css">
   bottom:
-    # 让全站背景跟随每个页面的顶部大图
-    - <script>const h=document.getElementById('page-header');const w=document.getElementById('web_bg');if(h&&w&&h.style.backgroundImage){w.style.backgroundImage=h.style.backgroundImage}</script>
+    # - <script src="xxxx"></script>
 
 # CDN Settings
 # Don't modify the following settings unless you know how they work
