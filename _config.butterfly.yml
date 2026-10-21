@@ -60,7 +60,7 @@ social:
 favicon: /img/favicon.png
 
 avatar:
-  img: /img/cover2.jpg
+  img: /img/图库/水墨头像.jpg
   effect: false
 
 # Disable all banner images
@@ -70,13 +70,13 @@ disable_top_img: false
 default_top_img: 
 
 # The banner image of index page
-index_img: img/cover3.jpeg
+index_img: /img/图库/霞云拔刀.jpeg
 
 # The banner image of archive page
-archive_img: /img/cover5.jpeg
+archive_img: /img/图库/胡蝶忍.jpeg
 
 # Note: tag page, not tags page
-tag_img: /img/cover6.jpg
+tag_img: /img/图库/水之呼吸少年.jpg
 
 # The banner image of tag page, you can set the banner image for each tag
 # Format:
@@ -84,7 +84,7 @@ tag_img: /img/cover6.jpg
 tag_per_img:
 
 # Note: category page, not categories page
-category_img: /img/cover7.jpeg
+category_img: /img/图库/炎柱炼狱.jpeg
 
 # The banner image of category page, you can set the banner image for each category
 # Format:
@@ -97,7 +97,7 @@ footer_img: false
 # Website Background
 # Can set it to color, image URL or an array containing colors and/or image URLs
 # If an array is provided, a random background will be selected from the array on each load
-background: /img/cover3.jpeg
+background: /img/图库/霞云拔刀.jpeg
 
 cover:
   # Disable the cover or not
@@ -525,12 +525,12 @@ share:
   # Share.js
   # https://github.com/overtrue/share.js
   sharejs:
-    sites: facebook,x,wechat,weibo,qq
+    sites: x,wechat,weibo,qq
 
   # AddToAny
   # https://www.addtoany.com/
   addtoany:
-    item: facebook,x,wechat,sina_weibo,facebook_messenger,email,copy_link
+    item: x,wechat,sina_weibo,email,copy_link
 
 # --------------------------------------
 # Comments System

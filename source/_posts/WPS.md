@@ -5,7 +5,7 @@ tags:
   - WPS
   - 文档排版
 sticky: 1
-cover: /img/cover4.jpg
+cover: /img/图库/水之呼吸.jpg
 ---
 
 一份大学物理实验报告的 docx，在 WPS 里编辑时排版好好的，但用 macOS 快速查看（选中文件按空格）和在手机上打开时就乱了。我把文件拆开查了一遍，找到三个原因。
