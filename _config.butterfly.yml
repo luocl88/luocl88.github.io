@@ -525,12 +525,12 @@ share:
   # Share.js
   # https://github.com/overtrue/share.js
   sharejs:
-    sites: x,wechat,weibo,qq
+    sites: wechat,weibo,qq
 
   # AddToAny
   # https://www.addtoany.com/
   addtoany:
-    item: x,wechat,sina_weibo,email,copy_link
+    item: wechat,sina_weibo,email,copy_link
 
 # --------------------------------------
 # Comments System
