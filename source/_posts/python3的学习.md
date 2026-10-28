@@ -2,7 +2,7 @@
 title: python3的学习
 date: 2026-09-11 23:26:42
 tags: 基础语法
-cover: /img/图库/水之呼吸少年.jpg
+cover: /img/图库/樱花蜜璃.jpg
 ---
 # python3的学习
 ## 目录
@@ -973,3 +973,800 @@ print(s[::-1]) # 字符串反转：fedcba
 * 第 1 个 if 成立，打印沪市 A 股
 后面所有 if 都不成立，最后一个 if 不成立，触发它的 else，额外打印：错误编码
 👉 结果会输出两行
+* 文件读写
+---
+# 哔哩哔哩课程
+## 基础
+内存就相当于是仓库，赋值时变量就相当于c语言中的指针，只保存了对象的地址（对象存在于仓库中）。
+* 赋值和深浅拷贝
+* 函数与return
+1. return返回值（若超过1个值，则返回元组）给调用者
+2. return表示函数结束
+* return与print：
+* 形参与实参：定义函数时里里面的值，实参调用函数时里面的具体的值
+* 必备参数：传递和定义参数的顺序集个数必须一致，def（a，b），写了几个要传几个
+* 默认参数：为参数提供默认值，调用函数时可以不传该默认值的值，fanc（a = 8），⚠️所有位置参数必须出现在默认参数前，包括函数定义和调用（b，a = 8）
+* 可变参数：传入值得数量可以改变，可以传入多个，也可以不传，，def func(*args),以元组形式返回
+* 关键字参数：def fund(**kwargs)，以字典形式返回{a = 1,b = 2},key = value,可以扩展函数的功能
+* 函数嵌套：在一个函数中调用另一个函数
+* 作用域：指的是变量生效范围，有局部变量和全局变量
+全局变量：函数外部定义的变量，在整个文件中都有效，局部变量反之，函数结束时失效
+global全局变量，将局部变量变成全局变量
+* 匿名函数：函数名 = lambda（关键字） 形参；返回值（表达式），无需return返回值，表达式本身就是返回。add = lambda a,b：a+b
+* lambda的参数形式：无参，一个，默认
+* lambda结合if判断：comp = lambda a,b:"a>b"if a>b else "a<=b>"
+* 内置函数：
+  1. 查看所有内置函数import builtins-->print(dir(builtins))
+  2. 常用内置函数
+   - `abs()`：返回绝对值
+   - `sum()`：求和，里面只能是可迭代对象
+   - `min()`：求最小值
+   - `max()`：求最大值
+   - `zip()`：将可迭代对象中对应的元素打包成元组
+
+     ```python
+     li = [1, 2, 3]
+     li2 = ['a', 'b', 'c']
+     print(zip(li, li2))
+     for i in zip(li, li2):
+         print(i)
+         print(type(i))
+     ```
+
+     输出：
+
+     ```text
+     <zip object at 0x...>
+     (1, 'a')
+     <class 'tuple'>
+     ...
+     ```
+   - map():可以对可迭代对象中的每一个元素进行映射，分别去执行，简单来说就是将每一个元素都遍历一遍
+     ```
+     li = [1,2,3]
+     def funa(x):
+         return x * 2
+     print(list(map(funa, li)))#[2, 4, 6]
+     ```
+   - reduce():先把对象中的两个元素去除，计算出其中一个值然后保存着，接下来把这个计算值跟第三个元素进行计算，需要先导包
+    ```
+    from functools import reduce
+    # reduce(function, sequence)函数会对参数序列中元素进行累积,function必须接收两个参数,sequence是序列：可迭代对象。
+    li = [1,2,3,4]
+    def funb(x,y):
+        return x + y
+    print(reduce(funb, li))  # 10
+    ```
+* 拆包：对于函数中的多个返回数据，去掉元组，列或者字典直接获取里面数据的过程。
+```
+tua = (1,2,3,4)
+print(tua)
+# print(tua[0])
+# a,b,c,d = tua
+# print(a,b,c,d)#method1
+a,*b = tua
+print(a,b) #method2
+```
+* 异常：
+  - 抛出异常raise：
+  - try and except:用来捕获代码运行时的错误，不让程序直接崩溃终止。1. 先运行 `try` 里面所有代码;
+   ✅ 如果**没有报错**：`except` 里面代码**不执行**，直接跳过; ❌ 如果**出现异常**：立刻停止 try 里代码，跳到`except`执行
+    ```
+    def login():
+        pwd = input("请输入密码：") 
+        if len(pwd) >= 6:
+            return '登录成功'
+        raise Exception("密码长度不能小于6位")
+    # print(login())
+    try: #捕获异常
+        print(login())
+    except Exception as e:
+        print(e) #捕获异常是为了防止程序崩溃，打印异常信息，让程序继续执行下去
+    ```
+* > 模块：一个py文件就是一个模快，即倒入一个模块本质上就是执行一个py文件
+  > 1. 内置模块：例如random,time,os,login,直接导入皆可使用
+  > 1. 第三方模块：下载：终端输入pip install 模块名（pip install 是 Python 的“安装包”命令。）
+  >1. 自定义模块：自己在项目里定义的模块。注意啊；命名要遵循规则。不要与内置模块起冲突，否则会导致模块功能无法使用
+  >> 导入模块：
+  >> import 模块名
+  >> 调用模块功能：模块.功能名
+    ```
+        #方式一：import 模块名；注意一个import可以导入多个模块，但最好一个模块单独使用一个import
+        # import pytext
+        # #调用pytext中的name变量
+        # print(pytext.name)
+        # #调用pytext模块中的funa函数
+        # pytext.funa()
+        #方式二：from ...import...
+        #语法：from 模块名 import 功能1，功能2...;从模块中导入指定的功能
+        from pytext import funa
+        funa() #直接输入功能即可，不用再添加模块了
+        #方式三：from ... import *(代表所有）#不建议过多使用from ... import ，有时候命名冲突会导致出现一些错误
+     ```
+  >> 给模块起别名：import 模块 as 别名
+  >> 给功能起别名：from 模块名 from 功能名 as 别名，另一个功能名 as 别名（多个功能用逗号隔开）
+* 内置全局量：`__name__`:用于控制py文件在不同场景执行不同的逻辑
+  -` if __name__  =="__mian__"`:文件在当前程序执行（）自己执行自己,被当作模块导入是，下面的内容不会被显示
+  - `__name__== 模块名`:文件被当作模块被其他文件导入
+    ```
+    import pytext2
+    pytext2.text()
+    ###
+    print("这是pytext2作为模块会显示的内容")
+    def text():
+        print("哈哈哈")
+    if __name__ == "__main__":
+        print("这是pytext2作为模块不会显示的内容")
+    ###
+    ```
+* 包：就是项目结构中的文件夹/目录
+  - 与普通文件夹的区别：包是含有`__init__.py`的文件夹（不建议在`__init__.py`文件中写大量代码）
+  - 作用：联系的模块放到同一文件夹下,有效避免模块名冲突问题，任结构更清晰
+  - 新建包：右键项目名-->new-->python package建有联系的模块放到同一文件夹下，有效避免模块名冲突问题，任结构更清晰
+  ```
+  #导包方式一：
+    # import pack_01 #import导入包是首先会执行__init__.py文件
+    #这是在模块里__init__.py文件
+    # #导包方式二：
+    # from pack_01 import register
+    # register.reg()
+  ```
+    ```
+    print("这是register.py文件")
+    def reg():
+        print("nb")
+    ###
+    这是在模块里__init__.py文件
+    这是register.py文件
+    nb
+    ###
+    ```
+   - `__all__`:本质上是一个列表，列表里的元素就代表要导入的模块
+   > 1. 作用：可以控制要引入的东西
+   ```
+   register.py
+    print("这是register.py文件")
+    def reg():
+        print("nb")
+        
+    logon.py
+    print("这是一个登录文件")
+    def logon():
+        print("666")
+
+    __init__.py
+    __all__ = ["register",'logon']#相当于导入[]中的模块
+
+    pytext.py
+    from pack_01 import *
+    register.reg()
+    logon.logon()
+    ###
+    这是register.py文件
+    这是一个登录文件
+    nb
+    666
+    ###
+   ```
+   - 包的本质依旧是模块，包又可以含包
+* 递归函数：一个函数在函数内部不掉用其他函数，而是调用自己
+  > 条件：
+  > 必须有一个明确的结束条件 --递归出口
+  > 每进行更深一层的递归，问题规模相比上次递归要有所减少 
+  >相邻两次重复之间有紧密联系
+  > 很简洁，逻辑清晰；使用递归函数时，消耗内存，慢
+* 闭包：在嵌套函数的前提下，内部函数使用了外部函数的变量，而且外部函数返回了内部函数，我们把使用了外部函数的内部函数称为闭包
+> 条件：
+> 1. 函数嵌套（函数里面再定义函数）
+> 2. 内层呢函数使用外层函数的局部变量
+> 3. 外层函数返回值是内层函数的函数名
+```
+def out():#外层函数
+    n =10#外层函数的局部变量
+    def inner(): #内层函数
+        print(n)#内层函数使用外层函数局部变量
+    return inner#返回内层函数名
+print(out())#<function out.<locals>.inner at 0x10eb4ee50>,返回的是内部函数的内层函数
+# out()()#第一种调用写法
+#第二种调用方法
+ot=out()
+ot()
+```
+```
+def out(m):#外函数，m是形参，也是外函数的局部变量
+    n = 10
+    def inner():#内函数
+        print("计算结果为：",m+n)
+    return inner
+ot = out(20)#调用外函数
+ot()#调用内函数
+```
+> 函数引用：先思考一下，我们在函数里用到a = 1时，我们知道a这个变量只是存（我们也可以说是引用）了1这个对象的地址，并不是等于a，所以得def add（），中的add这个函数名我们其实可以说里面存了函数的地址，所以我们可以通过引用调用函数
+```
+def outer(x):
+    def inner(y):
+        return x + y      # x 来自 outer，是闭包变量
+    return inner
+
+f = outer(10)
+print(f(5))               # 15
+
+执行过程：
+
+1. 调用 outer(10)，x = 10
+2. outer 返回 inner 这个函数对象
+3. 正常情况下，outer 执行完，它的局部变量 x 应该消失
+4. 但 inner 引用了 x，Python 会把 x 保存进 inner 的闭包里
+5. 所以之后 f(5) 仍然能用 x = 10，得到 15
+
+这就是闭包：内层函数 + 它捕获的外层变量。这里的 x 就是闭包变量。
+```
+* 装饰器：本质上就是一个闭包函数，更多是用于后期升级而不是去编写更多代码，可以让函数在不需要做任何代码的变动下增加额外功能
+  - 1. 不修改原程序或函数的代码
+  - 2. 不改变函数或程序的调用方法
+  ```
+    #标准语法
+    #被装饰的函数
+    def send():
+        print("发送消息")
+    #装饰器函数
+    def out(fn):
+        print("登录")
+        def inner():
+            #执行被装饰地函数
+            fn()
+        return inner
+    ot = out(send)
+    ot()
+    #装饰器的原理就是将原有的函数名重新定义为原函数为参数的闭包
+  ```
+  ```
+  #语法糖：@out 是 send = out(send) 的简写
+    def out(fn):
+    print("登录")
+    def inner():
+        fn()
+    return inner
+    @out
+    def send():
+        print("发送消息：哈哈哈")
+    send()
+   ```
+
+  
+==闭包是“函数套函数，并且内层记住了外层的变量”；装饰器是“接收一个函数，返回一个包装过的新函数”；导入模块则是“直接复用别人写好的函数“==
+
+---
+## 进阶-面向过程和对象
+* 面向过程（手洗）：需要实现一个功能的时候看中的是过程，分析出一个个步骤，并把一个个步骤用一个个函数实现（每一个步骤都要自己亲力亲为）
+* >面向对象（机洗）：需要实现一个功能的时候，着重的是谁帮我去做这件事（偷懒，找别人帮我做）
+  >类：对一系列具有同属性和行为的事物的统称，是一个抽象的概念，不是真实存在的事物
+  >>格式：class类名：#类名必须符合标识符规定同时遵循大驼峰命名法，见名知意
+            代码块
+```
+class Washer:
+    height = 800#类属性：就是类所拥有的属性
+    # 查看类属性：类名.属姓名
+    print(Washer.height)
+    #新增类属性：类名.属姓名=值
+    Washer.weight = 450
+    print(Washer.weight)
+```
+  >>三要素：
+  >>1. 类名
+  >>2. 属性：对象的特征描述，用来说明是什么样子
+  >>3. 方法：对象具有的功能（行为），用来说明能做什么
+
+  >对象：类的具体表现，是类创建出来的真实存在的面向对象的思想核心
+  >>创建对象的过程也叫做实例化对象
+  >>实例化对象的基本格式：对象名=类名（）
+  >>实例方法和实例属性
+  >>>实例方法：
+  >>>1. 有对象调用，至少有一个self参数[^self参数]，执行实例方法的时候，自动将调用该方法的对象赋值给self
+```
+class Washer:
+    height = 800#类属性：就是类所拥有的属性
+# 查看类属性：类名.属姓名
+print(Washer.height)
+#新增类属性：类名.属姓名=值
+Washer.weight = 450
+print(Washer.weight)
+#实例化一个洗衣机对象
+wa = Washer()
+print(wa)#<__main__.Washer object at 0x100598590>
+wa2 = Washer()
+print(wa2)# <__main__.Washer object at 0x100578550>
+#内存地址不同说明是不同的对象，可以实例化多个对象
+```
+  >>>实例属性
+  >>>与类属性的区别：类属性属于类，是公共的，大家都能访问到，实例属性属于对象，是私有的，只能由对象访问，不能由类名访问
+  >>>格式：self.属性名
+```
+class Person:
+    name = "luocahngli"#类属性
+    def introduce(self):
+        print("我是实例方法")
+        print(f"{self.name}的年龄:{self.age}")#self.age是实例属性
+pe = Person()
+pe.age = 18
+pe.sex = "女"
+print(pe.sex)
+#print(Person.sex)#实例属性只能由对象访问，类不能访问
+pe.introduce()
+```
+![](../img/python3的学习/2026-10-24-18-06-32.png)
+  
+  [^self参数]:self 代表“当前这个对象自己”
+* 构造函数`__init__()`
+  - 作用：通常用来做属性初始化或者赋值操作
+  - 注意：在类实例化对象的时候，会被自动调用
+```
+  # #构造函数__init__()
+class Test:
+    def __init__(self):#self--实例方法
+        print("这是__init__()函数")
+te = Test()
+# Test.__init__(te)   # ← 自动调用,你没有写,但 Python 一定会调
+```
+* 析构函数`__del__()`：删除对象的时候，解释器会默认用`__del__()`方法
+```
+  #析构函数__del__()，主要是表示该程序块或者函数已经全部执行结束
+class Person():
+    def __init__(self):
+        print("我是__init__()")
+    def __del__(self):
+        print("被销毁了")
+p = Person()
+del p#删除p这个对象
+#del p语句执行时，内存会被立即回收，会调用对象本身的__del__()方法
+print("这是最后一行代码")#正常运行时不会调用__del__(),对象执行结束后，系统会自动调用__del__()
+# 我是__init__()
+# 被销毁了
+# 这是最后一行代码
+```
+* 面向对象的三大特性：封装、继承、多态
+  - >封装：指的是隐藏对象中一些不希望被外部访问到的属性或方法(前面有两个下划线)
+```
+class Person:
+    name = 'luochangli'#类属性
+    __age = 18#隐藏属性
+    def introduce(self):
+        print(f"{Person.name}的年龄是{Person.__age}")#在实例方法中访问类属性和隐藏属性
+pe = Person()
+print(pe.name)
+# print(pe.__age)#报错，无法访问
+#第一种
+#隐藏属性实际上是将名字修改为：_类名__属姓名 _Person__age
+# print(pe._Person__age)#隐藏属性显示出来了
+#第二种：在类的内部访问，推荐使用，正规手段
+pe.introduce()
+```
+  - >私有属性/方法
+  >1. XXX:普通属性/方法，如果定义在类中，则类可以在任意地方使用
+  >2. -XXX:单下滑线开头，声明私有属性或方法，如果定义在类中，子类也可以继承，但是通过import *导入时，无法导入，一般是为了避免与python关键字冲突而采用的命名方法
+  >3. __XXX:双下划线开头，隐藏属性，无法在外部直接访问，子类不会继承，要访问只能通过间接的方式，另一py文件中通过from XXX import * 导入的时候，也无法导入，这一种命名一般是python中的魔法方法或属性，都是有特殊含义或者功能的，自己不要轻易定义
+  ```
+class Person:
+    name  = "luocahngli"
+    __age = 18#隐藏属性
+    _sex = "female"
+pe = Person()
+# print(pe.sex)#报错，使用对象名._属性
+print(pe._sex)
+print(pe._Person__age)
+```
+```
+class Man:
+    def __play(self):#隐藏方法
+        print("玩手机")
+    def funa(self):#普通的实例方法
+        print("普通的实例方法")
+        Man.__play(self)#在实例方法中调用私有方法，也可以self.__play(),更推荐
+man = Man()
+man.funa()
+# man.__play()#报错
+# man._Man__play()
+```
+* 继承：让类和类之间转变为父子关系，之类默认继承父类的属性和方法
+> 语法 
+class 类名(父类名)：
+#代码块
+
+> 单继承
+
+```
+class Person:
+    def eat(self):
+        print("i can eat")
+    def sing(self):
+        print("i can sing")
+class girl(Person):#Person类的子类
+    pass
+girl = girl()
+girl.eat()#i can eat
+girl.sing()#i can sing
+#总结：子类可以继承父类的属性和方法，就算子类没有也可以使用父类的
+```
+> 继承的传递（多重继承）
+> A/B/C c(子类)继承于B(父类)，B（子类）继承于A（父类），C类具有A/B的属性和方法
+```
+class Father:
+    def eat(self):
+        print("i can eat")
+    def drink(self):
+        print("i can drink")
+class Son(Father):
+    pass
+class Gradson(Son):
+    pass
+grandson = Gradson()
+grandson.eat()
+grandson.drink()#继承的传递性
+# son = Son()
+# son.eat()
+# son.drink()
+```
+>方法的重写：在子类中定义与父类相同名称的方法
+>> 覆盖父类的方法：
+```
+class Person:
+    def money(self):
+        print("i have a million")
+class Man(Person):
+    def money(self):
+        print("i have a billion")
+man = Man()
+man.money()#i have a billion
+```
+>>对弗雷德方法进行扩展：继承父类的方法，子类也可以增加自己的功能
+```
+1.父类名.方法名（self）
+class Person:
+    def money(self):
+        print("i have a million")
+class Man(Person):
+    def money(self):
+        Person.money(self)
+        print("i have a billion")
+man = Man()
+man.money()#i have a billion
+###
+i have a million
+i have a billion
+###
+
+```
+```
+2.super().方法名()---推荐，super()是使用super类创建出来的对象，可以调用父类中的方法
+class Person:
+    def money(self):
+        print("i have a million")
+class Man(Person):
+    def money(self):
+        super().money()
+        # Person.money(self)
+        print("i have a billion")
+man = Man()
+man.money()#i have a billion
+```
+```
+3.super(子类名，self).方法名()
+class Person:
+    def money(self):
+        print("i have a million")
+class Man(Person):
+    def money(self):
+        super(Man,self).money()
+        # super().money()
+        # Person.money(self)
+        print("i have a billion")
+man = Man()
+man.money()#i have a billion
+```
+> 新式类写法：
+```
+#class A:#经典类：不由任意内置类型派生出来的类
+class Animal:
+    def walk(self):
+        print("i can walk")
+class Dog(Animal):#Dog类是派生类：有不同于父类的东西
+    def bite(self):
+        name = 'nene'
+        print("i can bite")
+#class A()
+#class A(object),新式类：继承了object类或者该类的子类都是新式类，推荐使用
+#object———对象，python为所有对象提供的基（顶级父类），提供了一些内置的属性和方法，可以使用dir（）查看
+#print(dir(object))
+#python3中如果一个类没有继承任何类，则默认继承object类，因此python3都是新类式
+```
+* 多继承
+> 1.子类可以拥有多个父类，并且具有所有父类的属性和方法
+```
+class Father(object):#和class Father():,没有区别，在python3中默认所有类默认就继承 object
+    def money(self):
+        print("Money")
+class Mother(object):
+    def beauty(self):
+        print("Beauty")
+class Child(Father, Mother):
+    pass
+child = Child()
+
+child.beauty()
+child.money()
+```
+> 2.不同的父类具有相同的方法
+```
+class Father(object):#和class Father():,没有区别，在python3中默认所有类默认就继承 object
+    def money(self):
+        print("Money")
+class Mother(object):
+    def beauty(self):
+        print("Beauty")
+    def money(self):
+        print("Money2")
+class Child(Father, Mother):
+    pass
+child = Child()
+child.beauty()
+child.money()
+###
+Beauty
+Money
+###
+有多个父类的属性和方法，如果有相同的方法的时候，调用就就近原则，先调用括号的第一个
+```
+> 3.方法的搜索顺序（了解即可）：python中内置的属性__mro__可以查看搜索顺序
+```
+print(Child.__mro__)
+###
+(<class '__main__.Child'>, <class '__main__.Mother'>, <class '__main__.Father'>, <class 'object'>)
+###
+```
+> 4.多继承的弊端：1.容易引发冲突2.会导致代码设计的复杂度增加
+* 多态：指同一种行为具有不同的表现形式
+> 1.前提：继承，重写
+> 2.多态性：一种调用方法，不同的执行结果
+```
+class Animal():
+    def shout(self):
+        print("动物会叫")
+class Cat(Animal):
+    def shout(self):
+        print("喵喵")
+class Dog(Animal):
+    def shout(self):
+        print("汪汪")
+#多态性：定义一个统一的接口，一个接口多种实现
+def test(obj):
+    obj.shout()
+animal = Animal()
+cat = Cat()
+dog = Dog()
+test(animal)
+test(cat)
+test(dog)
+#test函数传入不同对象，执行不同对象的shout方法
+```
+* 静态方法：使用@staticmethod来进行修饰，静态方法没有self,cls参数的限制，与类无关，可以转化成函数使用
+```
+class Person:
+    @staticmethod#静态方法
+    def study():
+        print("人类会学习")#静态方法可以使用对象访问，也可以使用类访问
+Person.study()
+person = Person()
+person.study()
+#取消不必要的参数传递，有利于减少不必要的内存占用和性能消耗
+```
+*类方法：使用装饰器@classmethod来标识为类方法，第一个参数必须是类对象，一般是以cls作为第一个参数
+```
+class Person:
+    name ="binbin"#类属性
+    @classmethod
+    def sleep(cls):
+        print("cls:",cls)
+        print("人类在睡觉")
+        print(cls.name)
+Person.sleep()
+#当方法中需要使用到类对象（如访问私有属性等），定义类方法
+#类方法一般配合类属性使用
+```
+* **总结：**
+  ![](../img/python3的学习/2026-10-26-23-29-19.png)
+* __init__()和__new__()
+“重写”的前提
+
+重写（override）= 子类定义了和父类同名的方法。
+
+- 有父类、父类有同名方法 → 才叫重写，super() 可以调用父类版本。
+- 没有父类方法 → 你只是定义了一个新方法，不叫重写，super() 也没有东西可调。
+> 单例模式：可以理解成一个特殊的类，这个类只存在一个对象，可以节省内存空间，减少了不必要的资源浪费，多线程访问是会引发线程安全问题
+> 方式
+> 1.通过@classmethod
+```
+class Singleton:
+    _instance = None          # 类属性，用来存唯一对象
+
+    def __init__(self, name):
+        self.name = name
+
+    @classmethod
+    def get_instance(cls, name="default"):
+        if cls._instance is None:        # 第一次
+            cls._instance = cls(name)    # 创建并保存
+        return cls._instance             # 以后都返回它
+使用：
+
+a = Singleton.get_instance("A")
+b = Singleton.get_instance("B")
+
+print(a is b)      # True
+print(a.name)      # A
+print(b.name)      # A，第二次传的 B 被忽略
+```
+> 2.通过装饰器实现
+```
+import functools
+
+def singleton(cls):
+    instances = {}
+
+    @functools.wraps(cls)
+    def wrapper(*args, **kwargs):
+        if cls not in instances:
+            instances[cls] = cls(*args, **kwargs)
+        return instances[cls]
+
+    return wrapper
+
+使用：
+
+@singleton
+class Config:
+    def __init__(self, name):
+        self.name = name
+
+c1 = Config("A")
+c2 = Config("B")
+
+print(c1 is c2)    # True
+print(c1.name)     # A
+print(c2.name)     # A
+```
+> 3.通过重写__new__()来实现（重点）
+>>设计流程
+>> 1.定义一个类属性，他的初始值为None，用来记录单；例对象的引用
+>> 2.重写__new__（）方法
+>> 3.进行判断，如果类属性是None，把__new__()返回的对象保存进去
+>> 4.返回类属性中对象的引用
+```
+#单例模式，每次实例化所创建的对象都是同一个
+class Singleton:
+    #记录第一个被创建的对象的引用
+    obj = None#类属性
+    def __new__(cls,*args,**kwargs):
+        print("这是new方法")
+        #判断类属性是否为空
+        if cls.obj is None:#为空就直接分配内存，不为空直接返回引用
+            cls.obj = super().__new__(cls)
+        return cls.obj
+    def __init__(self):
+        print("我是__init__")
+s = Singleton()
+print("s:",s)
+s2 = Singleton()
+print("s2:",s2)
+```
+> 4.通过导入模块实现:模块就是天然的单例模式
+```
+from pytext import te as te01
+from pytext import te as te02
+print(te01,id(te01))
+print(te02,id(te02))
+# <pytext.Test object at 0x106eb0590> 4411032976        
+# <pytext.Test object at 0x106eb0590> 4411032976
+```
+* 应用场景：
+> 回收站对象
+> 音乐播放器，一个音乐播放器负责音乐播放的对象只有一个
+> 开发游戏软件，场景管理器
+> 数据库配置，数据库连接池的设计
+* 魔法方法：__XX__()的函数就叫做魔法方法，具有特殊功能的函数
+>1.`__doc__()`:类的描述信息
+```class Person:
+    """ 人类---类,函数的描述信息"""#只能用多行注释
+    pass
+    def sing(self):
+        """changge"""
+print(Person.__doc__)#人类---类的描述信息
+pe = Person()
+print(pe.sing.__doc__)#changge
+```
+>2.`__moudle__()`:表示当前操作对象所在的模块
+>3.`__class__()`:表示当前操作对象所在的类
+>4.`__str__()`:对象的描述信息，如果类中定义了此方法，那么在打印对象时，默认输出该方法的返回值，也就是打印方法中return的数据，他必须返回一个字符串
+```
+class C:
+    def __str__(self):
+        return "这里是str的返回值"
+c= C()
+print(c)#这里是str的返回值
+```
+>5.`__del__()`:析构函数，在程序结束时会调用，或者删除摸个对象的时候会被调用
+>6.`__call__()`:是一个实例对象成为一个可调用对象（函数，内置函数和类都是，凡事可以把一对（）引用到某个对象身上都可以称之为可调用对象），就像函数那样可以调用
+```
+class A:
+    def __call__(self,*args,**kwargs):
+        print("这是一个__call__函数")
+a = A()
+print(a)#<__main__.A object at 0x10b400590>
+a()#这是一个__call__函数
+```
+* 文件的基础操作
+> 文件就是储存在某种长期储存设备上的一段数据
+> 文件操作：打开文件--》读写文件--关闭文件
+> 文件对象方法：
+>>open():创建一个file对象，默认是一只读模式打开
+>>read(n):n表示从文件中读取的数据长度，没有传n值或者是负值就默认一次性读取文件的所有内容
+>>readline():一次只读取一行内容，方法执行完，会把文件指针移到下一行，准备再次读取
+>>readlines():按照行的方式把文件内容一次性读取，返回的是一个列表，每一行的数据就是列表中的一个数据
+>>write():将指定内容写入文件
+>>close():关闭文件
+>属性：
+>>1. 文件名.name:返回要打开的文件名，可以包含文件的具体路径
+>>2. 文件名.mode:返回文件的访问方式
+>>3. 文件名.closed:检测文件是否关闭，关闭就返回true
+
+>访问模式
+![](../img/python3的学习/2026-10-28-18-40-39.png)
+文件指针：标记从哪里开始读取数据
+>文件定位操作
+>>tell（）：显示文件当前位置，即文件指针当前位置
+>>seek(offset,whence):移动文件读取指针到指定位置；offset：偏移量，表示要移动的字节数，whence：起始位置，表示移动字节的参考位置，默认是0，0代表文件开头作为参考位置，1代表当前位置作为参考位置，2代表将文件结尾作为参考位置
+>>seek(0,0):会把文件指针移到文件开头
+```
+f = open("text.txt","w+")#先写再读
+f.write("Hello World")
+pos = f.tell()
+print(pos)#11,文件内容长度
+f.seek(0,0)
+pos2 = f.tell()
+print(pos2)#移动后所在位置，0
+print(f.read())#Hello World
+f.close()
+```
+* with open:代码执行完，系统自动调用f.close(),可以忽略文件关闭步骤
+```
+with open("text.txt","w+") as f:#f是文件对象
+    f.write("Hello World")
+    pos = f.tell()
+    print(pos)#11,文件内容长度
+    f.seek(0,0)
+    pos2 = f.tell()
+    print(pos2)#移动后所在位置，0
+    print(f.read())#Hello World
+```
+```
+with open('/Users/luochangli/Pictures/图库原图备份/樱色祢豆子.jpeg','rb') as f:
+    img = f.read()
+    print(img)
+with open('/Users/luochangli/python-practice/图片.jpeg','wb') as f1:
+    f1.write(img)
+```
+* 目录常用操作：
+> 导入模块：import os
+>>1. 文件重命名os.rename('旧名字'，'新名字')
+>>2. 删除文件 os.remove('文件名')
+>>3. 创建文件夹os.mkdir('文件夹名')
+>>4. 删除文件夹os.rmdir('文件夹名')
+>>5. 获取当前目录os.getcwd()
+>>6. 获取目录列表os.listdir()
+>>6. 获取上一级目录列表os.listdir(“../”)
+* 迭代器
+
+
+
+
+
+
